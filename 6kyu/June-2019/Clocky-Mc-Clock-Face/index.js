@@ -1,32 +1,58 @@
 var whatTimeIsIt = function(angle) {
-  let hour = 00;
-  let minute = 00;
-  let difference = 360 - angle;
-  let newMinute = angle / 30;
-  console.log(difference);
-  console.log(newMinute);
-  if(angle <= 29.9)
+  let hour = 0;
+  let minute = 0;
+  if(angle <= 29.9 || angle == 360)
   {
     hour = 12;
-    for(let i = 0; i < angle; i+=0.5)
+    if(angle == 360)
     {
-      minute += 1;
+      minute == 0;
+    }
+    else
+    {
+      for(let i = 0.5; i <= angle; i+=0.5)
+      {
+        minute += 1;
+      }
     }
   }
 
-  if(angle >= 30)
+  if(angle >= 30 && angle < 360)
   {
-    for(let i = 0; i < angle; i+=30)
+    let newAngle = 0;
+    while(angle > 29.9)
     {
-      hour += 1;
+      angle -= 30;
+      hour++;
     }
-
-    for(let i = 0; i < newMinute; i++)
+    for(let i = 0.5; i <= angle; i+=0.5)
     {
       minute += 1;
     }
   }
 
-  return hour + ":" + minute;
+  if(minute <= 9 && hour <= 9)
+  {
+    return "0" + hour + ":0" + minute;
+  }
+  else if(minute <= 9 && hour >= 10)
+  {
+    return hour + ":0" + minute;
+  }
+  else if(minute >= 10 && hour >= 10)
+  {
+    return hour + ":" + minute;
+  }
+  else if(minute >= 10 && hour <= 9)
+  {
+    return "0" + hour + ":" + minute;
+  }
 }
-whatTimeIsIt(301);
+whatTimeIsIt(31);
+
+// Shorter Solution:
+
+// var whatTimeIsIt = function(angle) {
+//   let h = ~~(angle/30), m = ~~((angle%30)*2);
+//   return `${h==0?12:h>9?h:"0"+h}:${m>9?m:"0"+m}`
+// }
