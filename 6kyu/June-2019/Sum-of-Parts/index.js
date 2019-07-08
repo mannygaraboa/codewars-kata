@@ -1,24 +1,21 @@
 function partsSums(ls) {
+  let wholeLength = ls.length;
   let sumArray = [];
-  let sum = 0;
-
-  for(let i = 0; i < ls.length; i++)
+  while(wholeLength >= 0)
   {
-    sumArray.push(i);
-  }
-  
-  for(let i = 0; i < ls.length; i++)
-  {
-    sum += ls[i];
-    if(i = ls.length)
+    let sum = 0;
+    for(let i = 0; i < ls.length; i++)
     {
-      sumArray.push(sum);
+      sum += ls[i];
+      console.log(sum);
     }
+    sumArray.push(sum);
+    wholeLength--;
+    ls.shift();
   }
-  sumArray.push(sum);
   return sumArray;
 }
-partsSums([1,3,5])
+partsSums([1,3,5,6,2])
 
 // ls.shift();
 
