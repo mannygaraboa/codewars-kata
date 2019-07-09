@@ -29,7 +29,7 @@ function isValidWalk(walk) {
     return false;
   }
 }
-isValidWalk(["n"])
+isValidWalk(["n", "s", "s", "w", "w", "n", "e", "n", "e", "s"])
 
 // Other Solution:
 
