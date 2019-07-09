@@ -10,14 +10,13 @@ function duplicateCount(text){
     let match = text.match(re).length;
     let arr = [upperChar, match];
     firstArr.push(arr);
+    if(i == 0 && ((firstArr[i])[1]) > 1)
+    {
+      count++;
+    }
   }
-
   finalArr.push(firstArr[0]);
-  if(((finalArr[0])[1]) > 1)
-  {
-    count++;
-  }
-
+  
   for(let i = 0; i < firstArr.length; i++)
   {
     let bool = true;
@@ -35,13 +34,15 @@ function duplicateCount(text){
       count++;
     }
   }
-  // console.log(firstArr);
-  // console.log(finalArr);
-  console.log(count);
+  console.log(finalArr);
   return count;
 }
 duplicateCount("eEhHeElL123321o");
 
-  
 // Syntax for match(): string.match(RegExp) 
 // 'gi' = case sensitive
+
+// Other Solution:
+  // function duplicateCount(text){
+  //   return (text.toLowerCase().split('').sort().join('').match(/([^])\1+/g) || []).length;
+  // }
