@@ -21,44 +21,40 @@ InterlacedSpiralCipher.encode = function(str){
     square.push([]);
   }
   console.log(square);
+  console.log("# of rows: " + rows);
 
-  // For a 4 x 4 square
-  /* Encoding sequence for a 4 x 4 square:
-  [ 1  5  9  2]
-  [12 13 14  6]
-  [ 8 16 15 10]
-  [ 4 11  7  3]
-  */
-
-  /* Encoding sequence for a 5 x 5 square:
-  [ 1  5  9 13  2]
-  [16 17 21 18  6]
-  [12 24 25 22 10]
-  [ 8 20 23 19 14]
-  [ 4 15 11  7  3]
-  */
-  let count = 0; 
+  let rowCount = 1;
+  let sideCount = 0;
+  let cornerCount = 0;
+  let nextCycle = 1;
   for(let i = 0; i < rows**2; i++)
   {
     let currentChar = str.charAt(i);
-  
     if(currentChar == "")
     {
       currentChar = " ";
     }
-    
-    if(i < 4)
+
+    // Filling up the sides of square after corners
+    if((rows - rowCount) > nextCycle && cornerCount > 0)
     {
-      square[count].splice(1, 0, currentChar);
+      square[sideCount].splice(rowCount, 0, currentChar);
+      square[sideCount + rowCount].splice((rows - 1), 0, str.charAt(i+1));
+      square[rows - 1].splice(1, 0, str.charAt(i+2));
+      square[(rows - 1) - rowCount].splice(sideCount, 0, str.charAt(i+3));
+      i += 3
+      rowCount++;
+      sideCount++;
     }
-     
-    if(count < rows-1)
+    // Setting up 4 corners of the square
+    else if(i < 4)
     {
-      count++;
-    }
-    else
-    {
-      count = 0;
+      square[cornerCount].splice(cornerCount, 0, currentChar);
+      square[cornerCount].splice((rows - rowCount), 0, str.charAt(i+1));
+      square[rows - rowCount].splice((rows - rowCount), 0, str.charAt(i+2));
+      square[rows - rowCount].splice(cornerCount, 0, str.charAt(i+3));
+      cornerCount++;
+      i += 3;
     }
   }
   console.log(square);
