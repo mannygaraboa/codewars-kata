@@ -35,28 +35,55 @@ InterlacedSpiralCipher.encode = function(str){
       currentChar = " ";
     }
 
+    // console.log("cornerCount: " + cornerCount);
+    // console.log("rowCount: " + rowCount);
+    // console.log("sideCount: " + sideCount);
+    // console.log("nextCycle: " + nextCycle);
+
     // Filling up the sides of square after corners
-    if((rows - rowCount) > nextCycle && cornerCount > 0)
+    if((rows - rowCount) > nextCycle && cornerCount > sideCount)
     {
+      // console.log("Entered sides addition");
       square[sideCount].splice(rowCount, 0, currentChar);
       square[sideCount + rowCount].splice((rows - 1), 0, str.charAt(i+1));
-      square[rows - 1].splice(1, 0, str.charAt(i+2));
-      square[(rows - 1) - rowCount].splice(sideCount, 0, str.charAt(i+3));
+      square[rows - nextCycle].splice(1, 0, str.charAt(i+2));
+      square[(rows - nextCycle) - rowCount].splice(sideCount, 0, str.charAt(i+3));
       i += 3
       rowCount++;
-      sideCount++;
+      console.log("Sides Added!");
+      console.log(square);
     }
     // Setting up 4 corners of the square
-    else if(i < 4)
+    else if(square[cornerCount].length < rows && rowCount == nextCycle)
     {
+      // console.log("Entered corners addition");
       square[cornerCount].splice(cornerCount, 0, currentChar);
       square[cornerCount].splice((rows - rowCount), 0, str.charAt(i+1));
-      square[rows - rowCount].splice((rows - rowCount), 0, str.charAt(i+2));
-      square[rows - rowCount].splice(cornerCount, 0, str.charAt(i+3));
+      square[(rows - rowCount)].splice((rows - rowCount) - cornerCount, 0, str.charAt(i+2));
+      square[(rows - rowCount)].splice(cornerCount, 0, str.charAt(i+3));
       cornerCount++;
       i += 3;
+      console.log("Corners Added!");
+      console.log(square);
+    }
+    else
+    {
+      // console.log("Entered cycle reset");
+      nextCycle++;
+      sideCount++;
+      rowCount = nextCycle;
+      if(i != rows**2)
+      {
+        i--;
+      }
+      console.log("New Cycle!");
+      console.log("cornerCount: " + cornerCount);
+      console.log("rowCount: " + rowCount);
+      console.log("sideCount: " + sideCount);
+      console.log("nextCycle: " + nextCycle);
     }
   }
+  console.log("Final Square:");
   console.log(square);
   
   // Combine the row arrays & then concat them together
