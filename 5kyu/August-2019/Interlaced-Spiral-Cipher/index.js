@@ -27,50 +27,81 @@ InterlacedSpiralCipher.encode = function(str){
   let sideCount = 0;
   let cornerCount = 0;
   let nextCycle = 1;
+  let subCount = 1;
   for(let i = 0; i < rows**2; i++)
   {
     let currentChar = str.charAt(i);
+    let nextChar1 = str.charAt(i+1);
+    let nextChar2 = str.charAt(i+2);
+    let nextChar3 = str.charAt(i+3);
     if(currentChar == "")
     {
       currentChar = " ";
     }
+    if(nextChar1 == "")
+    {
+      nextChar1 = " ";
+    }
+    if(nextChar2 == "")
+    {
+      nextChar2 = " ";
+    }
+    if(nextChar3 == "")
+    {
+      nextChar3 = " ";
+    }
 
-    // console.log("cornerCount: " + cornerCount);
-    // console.log("rowCount: " + rowCount);
-    // console.log("sideCount: " + sideCount);
-    // console.log("nextCycle: " + nextCycle);
+    // Adding center of square
+    if(i == rows**2 - 1 && rows % 2 != 0)
+    {
+      square[cornerCount].splice(cornerCount, 0, currentChar);
+      console.log("Center Added!");
+      console.log(square);
+    }
 
     // Filling up the sides of square after corners
-    if((rows - rowCount) > nextCycle && cornerCount > sideCount)
+    else if((rows - rowCount) > nextCycle && cornerCount > sideCount)
     {
-      // console.log("Entered sides addition");
       square[sideCount].splice(rowCount, 0, currentChar);
-      square[sideCount + rowCount].splice((rows - 1), 0, str.charAt(i+1));
-      square[rows - nextCycle].splice(1, 0, str.charAt(i+2));
-      square[(rows - nextCycle) - rowCount].splice(sideCount, 0, str.charAt(i+3));
+      square[rowCount].splice((rows - rowCount) - subCount, 0, nextChar1);
+      square[rows - nextCycle].splice(nextCycle, 0, nextChar2);
+      square[(rows - rowCount) - 1].splice(sideCount, 0, nextChar3);
       i += 3
       rowCount++;
       console.log("Sides Added!");
       console.log(square);
     }
     // Setting up 4 corners of the square
-    else if(square[cornerCount].length < rows && rowCount == nextCycle)
-    {
-      // console.log("Entered corners addition");
-      square[cornerCount].splice(cornerCount, 0, currentChar);
-      square[cornerCount].splice((rows - rowCount), 0, str.charAt(i+1));
-      square[(rows - rowCount)].splice((rows - rowCount) - cornerCount, 0, str.charAt(i+2));
-      square[(rows - rowCount)].splice(cornerCount, 0, str.charAt(i+3));
-      cornerCount++;
-      i += 3;
-      console.log("Corners Added!");
-      console.log(square);
-    }
+      // For odd number of rows
+      else if(square[cornerCount].length < rows && rowCount == nextCycle && rows % 2 != 0)
+      {
+        square[cornerCount].splice(cornerCount, 0, currentChar);
+        square[cornerCount].splice((rows - subCount) - cornerCount, 0, nextChar1);
+        square[(rows - rowCount)].splice((rows - subCount) - (cornerCount + 1), 0, nextChar2);
+        square[(rows - rowCount)].splice(cornerCount, 0, nextChar3);
+        cornerCount++;
+        i += 3;
+        console.log("Corners Added!");
+        console.log(square);
+      }
+      // For even number of rows
+      else if(square[cornerCount].length < rows && rowCount == nextCycle && rows % 2 == 0)
+      {
+        square[cornerCount].splice(cornerCount, 0, currentChar);
+        square[cornerCount].splice((rows - subCount), 0, nextChar1);
+        square[(rows - rowCount)].splice((rows - subCount) - (cornerCount), 0, nextChar2);
+        square[(rows - rowCount)].splice(cornerCount, 0, nextChar3);
+        cornerCount++;
+        i += 3;
+        console.log("Corners Added!");
+        console.log(square);
+      }
+    // Next cycle of corners and sides
     else
     {
-      // console.log("Entered cycle reset");
       nextCycle++;
       sideCount++;
+      subCount++;
       rowCount = nextCycle;
       if(i != rows**2)
       {
@@ -80,6 +111,7 @@ InterlacedSpiralCipher.encode = function(str){
       console.log("cornerCount: " + cornerCount);
       console.log("rowCount: " + rowCount);
       console.log("sideCount: " + sideCount);
+      console.log("subCount: " + subCount);
       console.log("nextCycle: " + nextCycle);
     }
   }
