@@ -3,6 +3,8 @@ let phrase1A = `Romani ite domum`;
 let phrase1B = `Rntodomiimuea  m`
 let phrase2A = `Sic transit gloria mundi`;
 let phrase2B = `Stsgiriuar i ninmd l otac`;
+let phrase7 = `kJycgLei&emcG)]fGJR$T^:(_:@<+Zw@IN=$f/c:`;
+let phrase8 = `@}]}-rK.;$hc%Y:o!(k%C=iA@?TIw/@zUXKisbh_@f&=AOY+@s;a'VuK`;
 
 /*--------------------------------------------------------------------------------------*/
 /*----------------------------------------ENCODE----------------------------------------*/
@@ -10,7 +12,7 @@ let phrase2B = `Stsgiriuar i ninmd l otac`;
 
 InterlacedSpiralCipher.encode = function(str){
   // Find out number of rows to make a perfect square
-  console.log(str);
+  console.log("ENCODE: " + str);
 	console.log("String length = " + str.length);
   let square = [];
   let sqrt = Math.sqrt(str.length);
@@ -51,7 +53,7 @@ InterlacedSpiralCipher.encode = function(str){
       nextChar3 = " ";
     }
 
-    // Adding center of square
+    // Adding center of square if number of rows is odd
     if(i == rows**2 - 1 && rows % 2 != 0)
     {
       square[cornerCount].splice(cornerCount, 0, currentChar);
@@ -121,7 +123,7 @@ InterlacedSpiralCipher.encode = function(str){
   // Combine the row arrays & then concat them together
   let concat = [].concat.apply([], square);
   let string = concat.join("");
-  console.log(string);
+  console.log("FINAL STRING: " + string);
   return string;
 };
 
@@ -131,7 +133,7 @@ InterlacedSpiralCipher.encode = function(str){
 
 InterlacedSpiralCipher.decode = function(str){
   // Find out number of rows to make a perfect square
-  console.log(str);
+  console.log("DECODE: " + str);
 	console.log("String length = " + str.length);
   let square = [];
   let sqrt = Math.sqrt(str.length);
@@ -142,95 +144,88 @@ InterlacedSpiralCipher.decode = function(str){
     square.push([]);
   }
   console.log(square);
+  console.log("# of rows: " + rows);
 
-  // Adding characters to rows for a 4 x 4 square
-  if(rows == 4)
+  let currentRow = 0;
+  for(i = 0; i < rows**2; i++)
   {
-    for(let i = 0; i < 16; i++)
+    let currentChar = str.charAt(i);
+    if(currentChar == "")
     {
-      let currentChar = str.charAt(i);
-      if(currentChar == "")
-      {
-        currentChar = " ";
-      }
-
-      if(square[0].length < 4)
-      {
-        square[0].push(currentChar);
-      }
-      else if(square[1].length < 4 && square[0].length == 4)
-      {
-        square[1].push(currentChar);
-      }
-      else if(square[2].length < 4 && square[1].length == 4)
-      {
-        square[2].push(currentChar);
-      }
-      else if(square[3].length < 4 && square[2].length == 4)
-      {
-        square[3].push(currentChar);
-      }
+      currentChar = " ";
     }
-    console.log(square);
+    
+    if(square[currentRow].length < rows)
+    {
+      square[currentRow].push(currentChar);
+    }
+    else
+    {
+      currentRow++;
+      square[currentRow].push(currentChar);
+    }
+  }
+  console.log(square);
 
-    let string = 
-    square[0][0] + square[0][3] + square[3][3] + square[3][0]
-    + square[0][1] + square[1][3] + square[3][2] + square[2][0]
-    + square[0][2] + square[2][3] + square[3][1] + square[1][0]
-    + square[1][1] + square[1][2] + square[2][2] + square[2][1]
-    console.log(string);
-    return string;
+  // Creating new string from square array
+  let finalArray = [];
+  let rowCount = 1;
+  let sideCount = 0;
+  let cornerCount = 0;
+  let nextCycle = 1;
+  let subCount = 1;
+  let subCount2 = 1;
+  while(finalArray.length < rows**2)
+  {
+    // Grabbing corners
+    if(cornerCount < nextCycle)
+    {
+      finalArray.push(square[cornerCount][cornerCount]);
+      finalArray.push(square[cornerCount][rows - subCount]);
+      finalArray.push(square[rows - subCount][rows - subCount]);
+      finalArray.push(square[rows - subCount][cornerCount]);
+      cornerCount++;
+    }
+
+    // Grabbing sides
+    else if(cornerCount == nextCycle && rowCount < (rows - subCount))
+    {
+      finalArray.push(square[sideCount][rowCount]);
+      finalArray.push(square[rowCount][rows - subCount]);
+      finalArray.push(square[rows - subCount][(rows - subCount2) - rowCount]);
+      finalArray.push(square[(rows - subCount) - rowCount][sideCount]);
+      rowCount++;
+    }
+
+    // Next Cycle
+    else
+    {
+      nextCycle++;
+      subCount++;
+      sideCount++;
+      rowCount = nextCycle;
+    }
   }
 
-  // Adding characters to rows for a 5 x 5 square
-  if(rows == 5)
+  // Clear out empty spaces at the end of finalArray
+  for(let i = finalArray.length - 1; i > 0; i--)
   {
-    for(let i = 0; i < 25; i++)
+    if(finalArray[i] == " ")
     {
-      let currentChar = str.charAt(i);
-      if(currentChar == "")
-      {
-        currentChar = " ";
-      }
-      
-      if(square[0].length < 5)
-      {
-        square[0].push(currentChar);
-      }
-      else if(square[1].length < 5 && square[0].length == 5)
-      {
-        square[1].push(currentChar);
-      }
-      else if(square[2].length < 5 && square[1].length == 5)
-      {
-        square[2].push(currentChar);
-      }
-      else if(square[3].length < 5 && square[2].length == 5)
-      {
-        square[3].push(currentChar);
-      }
-      else if(square[4].length < 5 && square[3].length == 5)
-      {
-        square[4].push(currentChar);
-      }
+      finalArray.pop();
     }
-    console.log(square);
-
-    let string = 
-    square[0][0] + square[0][4] + square[4][4] + square[4][0]
-    + square[0][1] + square[1][4] + square[4][3] + square[3][0]
-    + square[0][2] + square[2][4] + square[4][2] + square[2][0]
-    + square[0][3] + square[3][4] + square[4][1] + square[1][0]
-    + square[1][1] + square[1][3] + square[3][3] + square[3][1]
-    + square[1][2] + square[2][3] + square[3][2] + square[2][1]
-    + square[2][2];
-    console.log(string);
-    return string;
+    else
+    {
+      break;
+    }
   }
+  console.log(finalArray);
+  let string = finalArray.join("");
+  console.log("FINAL STRING: " + string);
+  return string;
 };
-
-InterlacedSpiralCipher.encode(phrase2A);
-InterlacedSpiralCipher.decode(phrase2A);
+InterlacedSpiralCipher.encode(phrase2B);
+InterlacedSpiralCipher.decode(phrase2B);
 
 /* Encoding sequence for a 4 x 4 square:
 [ 1  5  9  2]
