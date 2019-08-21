@@ -151,6 +151,9 @@ InterlacedSpiralCipher.decode = function(str){
   let square = [];
   let sqrt = Math.sqrt(str.length);
   let rows = Math.ceil(sqrt);
+  let halfRows = rows / 2;
+  let center = Math.floor(halfRows);
+  console.log("Center: " + center);
   
   for(let i = 0; i < rows; i++)
   {
@@ -160,6 +163,7 @@ InterlacedSpiralCipher.decode = function(str){
   console.log("# of rows: " + rows);
 
   let currentRow = 0;
+  
   for(i = 0; i < rows**2; i++)
   {
     let currentChar = str.charAt(i);
@@ -179,7 +183,7 @@ InterlacedSpiralCipher.decode = function(str){
     }
   }
   console.log(square);
-
+                                                       
   // Creating new string from square array
   let finalArray = [];
   let rowCount = 1;
@@ -187,11 +191,24 @@ InterlacedSpiralCipher.decode = function(str){
   let cornerCount = 0;
   let nextCycle = 1;
   let subCount = 1;
-  let subCount2 = 1;
+
+  console.log("First Cycle!");
+  console.log("cornerCount: " + cornerCount);
+  console.log("rowCount: " + rowCount);
+  console.log("sideCount: " + sideCount);
+  console.log("subCount: " + subCount);
+  console.log("nextCycle: " + nextCycle);
+
   while(finalArray.length < rows**2)
   {
+    // Adding center of square if number of rows is odd
+    if(finalArray.length == rows**2 - 1 && rows % 2 != 0)
+    {
+      finalArray.push(square[center][center]);
+    }
+
     // Grabbing corners
-    if(cornerCount < nextCycle)
+    else if(cornerCount < nextCycle)
     {
       finalArray.push(square[cornerCount][cornerCount]);
       finalArray.push(square[cornerCount][rows - subCount]);
@@ -205,8 +222,8 @@ InterlacedSpiralCipher.decode = function(str){
     {
       finalArray.push(square[sideCount][rowCount]);
       finalArray.push(square[rowCount][rows - subCount]);
-      finalArray.push(square[rows - subCount][(rows - subCount2) - rowCount]);
-      finalArray.push(square[(rows - subCount) - rowCount][sideCount]);
+      finalArray.push(square[rows - subCount][(rows - 1) - rowCount]);
+      finalArray.push(square[(rows - 1) - rowCount][sideCount]);
       rowCount++;
     }
 
@@ -217,6 +234,15 @@ InterlacedSpiralCipher.decode = function(str){
       subCount++;
       sideCount++;
       rowCount = nextCycle;
+
+      console.log(square);
+      console.log(finalArray);
+      console.log("New Cycle!");
+      console.log("cornerCount: " + cornerCount);
+      console.log("rowCount: " + rowCount);
+      console.log("sideCount: " + sideCount);
+      console.log("subCount: " + subCount);
+      console.log("nextCycle: " + nextCycle);
     }
   }
 
@@ -261,3 +287,52 @@ InterlacedSpiralCipher.decode(phrase2B);
   // };
 
 // arr.splice(index, 0, item); will insert item into arr at the specified index (deleting 0 items first, that is, it's just an insert).
+
+// Other Solution:
+
+  // const InterlacedSpiralCipher = {};
+
+  // InterlacedSpiralCipher.encode = function(str) {
+  //   let size = Math.ceil(str.length ** 0.5)
+  //   let grid = [...Array(size)].map(x => Array(size).fill(' '))
+  //   let idx = 0
+    
+  //   let rotate = (r, c) => [c, size - 1 - r]
+  //   for (let row = 0; row < size / 2; ++row) {
+  //     for (let col = row; col < Math.max(size - row - 1, size / 2); ++col) {
+  //       let r = row, c = col
+  //       if (row == (size - 1) / 2) {
+  //         grid[r][c] = str[idx] || ' '
+  //         break
+  //       }
+  //       for (let i = 0; i < 4; ++i) {
+  //         grid[r][c] = str[idx++] || ' ';
+  //         [r, c] = rotate(r, c)
+  //       }
+  //     }
+  //   }
+  //   return grid.map(x => x.join``).join``
+  // };
+
+  // InterlacedSpiralCipher.decode = function(str) {
+  //   let size = Math.ceil(str.length ** 0.5)
+  //   let grid = [...Array(size)].map((_, r) => [...str.slice(r*size, r*size+size)])
+  //   let idx = 0
+  //   let result = ''
+    
+  //   let rotate = (r, c) => [c, size - 1 - r]
+  //   for (let row = 0; row < size / 2; ++row) {
+  //     for (let col = row; col < Math.max(size - row - 1, size / 2); ++col) {
+  //       let r = row, c = col
+  //       if (row == (size - 1) / 2) {
+  //         result += grid[r][c]
+  //         break
+  //       }
+  //       for (let i = 0; i < 4; ++i) {
+  //         result += grid[r][c];
+  //         [r, c] = rotate(r, c)
+  //       }
+  //     }
+  //   }
+  //   return result.trim()
+  // };
