@@ -3,6 +3,7 @@ let phrase1A = `Romani ite domum`;
 let phrase1B = `Rntodomiimuea  m`
 let phrase2A = `Sic transit gloria mundi`;
 let phrase2B = `Stsgiriuar i ninmd l otac`;
+let phrase6 = `I like videogames I like boardgames$`;
 let phrase7 = `kJycgLei&emcG)]fGJR$T^:(_:@<+Zw@IN=$f/c:`;
 let phrase8 = `@}]}-rK.;$hc%Y:o!(k%C=iA@?TIw/@zUXKisbh_@f&=AOY+@s;a'VuK`;
 
@@ -29,7 +30,17 @@ InterlacedSpiralCipher.encode = function(str){
   let sideCount = 0;
   let cornerCount = 0;
   let nextCycle = 1;
-  let subCount = 1;
+  let addCount = 1;
+  let subCount = (rows - 1);
+
+  console.log("First Cycle!");
+  console.log("cornerCount: " + cornerCount);
+  console.log("rowCount: " + rowCount);
+  console.log("sideCount: " + sideCount);
+  console.log("addCount: " + addCount);
+  console.log("subCount: " + subCount);
+  console.log("nextCycle: " + nextCycle);
+
   for(let i = 0; i < rows**2; i++)
   {
     let currentChar = str.charAt(i);
@@ -65,7 +76,7 @@ InterlacedSpiralCipher.encode = function(str){
     else if((rows - rowCount) > nextCycle && cornerCount > sideCount)
     {
       square[sideCount].splice(rowCount, 0, currentChar);
-      square[rowCount].splice((rows - rowCount) - subCount, 0, nextChar1);
+      square[rowCount].splice((square[rowCount].length) - sideCount, 0, nextChar1);
       square[rows - nextCycle].splice(nextCycle, 0, nextChar2);
       square[(rows - rowCount) - 1].splice(sideCount, 0, nextChar3);
       i += 3
@@ -78,8 +89,8 @@ InterlacedSpiralCipher.encode = function(str){
       else if(square[cornerCount].length < rows && rowCount == nextCycle && rows % 2 != 0)
       {
         square[cornerCount].splice(cornerCount, 0, currentChar);
-        square[cornerCount].splice((rows - subCount) - cornerCount, 0, nextChar1);
-        square[(rows - rowCount)].splice((rows - subCount) - (cornerCount + 1), 0, nextChar2);
+        square[cornerCount].splice((rows - subCount), 0, nextChar1);
+        square[(rows - rowCount)].splice((rows - subCount) - 1, 0, nextChar2);
         square[(rows - rowCount)].splice(cornerCount, 0, nextChar3);
         cornerCount++;
         i += 3;
@@ -91,7 +102,7 @@ InterlacedSpiralCipher.encode = function(str){
       {
         square[cornerCount].splice(cornerCount, 0, currentChar);
         square[cornerCount].splice((rows - subCount), 0, nextChar1);
-        square[(rows - rowCount)].splice((rows - subCount) - (cornerCount), 0, nextChar2);
+        square[(rows - rowCount)].splice((rows - subCount) - 1, 0, nextChar2);
         square[(rows - rowCount)].splice(cornerCount, 0, nextChar3);
         cornerCount++;
         i += 3;
@@ -103,7 +114,8 @@ InterlacedSpiralCipher.encode = function(str){
     {
       nextCycle++;
       sideCount++;
-      subCount++;
+      addCount++;
+      subCount--;
       rowCount = nextCycle;
       if(i != rows**2)
       {
@@ -113,6 +125,7 @@ InterlacedSpiralCipher.encode = function(str){
       console.log("cornerCount: " + cornerCount);
       console.log("rowCount: " + rowCount);
       console.log("sideCount: " + sideCount);
+      console.log("addCount: " + addCount);
       console.log("subCount: " + subCount);
       console.log("nextCycle: " + nextCycle);
     }
