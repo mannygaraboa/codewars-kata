@@ -2,9 +2,9 @@ function solution(numbers) {
   const allEqual = arr => arr.every(v => v === arr[0]);
   while(allEqual(numbers) != true)
   {
-    for(let i = numbers.length - 1; i > 0; i--)
+    for(let i = numbers.length - 1; i >= 0; i--)
     {
-      for(let j = i - 1; j > 0; j--)
+      for(let j = numbers.length - 1; j >= 0; j--)
       {
         if(numbers[i] > numbers[j])
         {
@@ -16,6 +16,8 @@ function solution(numbers) {
       }
     }
   }
+
+  console.log("Final Set: " + numbers);
 
   function getSum(total, num){
     return total + num;
