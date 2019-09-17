@@ -16,31 +16,41 @@ function isPrime(num) {
     i++
   }
   return bool;
-
+}
   // New Method Attempt:
-  function isPrime(num) {
-    let bool = true;
-    if(num <= 1 || num == 4)
+function isPrime(num) {
+  let bool = true;
+  if(num <= 1)
+  {
+    bool = false;
+    return bool;
+  }
+  else if(num % 2 == 0 && num != 2)
+  {
+    bool = false;
+    return bool;
+  }
+  else if(num % 2 != 0)
+  {
+    if(num % 3 == 0 && num != 3 || num % 5 == 0 && num != 5 || num % 7 == 0 && num != 7)
     {
       bool = false;
       return bool;
     }
     
-    if(num == 2 || num == 3 || num == 5)
+    let sqrt = Math.sqrt(num);
+    if(Number.isInteger(sqrt) == true)
     {
-      bool = true;
+      bool = false;
+      return bool;
     }
-    
-    if(num >= 6)
+    else if(sqrt % 2 == 0)
     {
-      if(num % 2 == 0 || num % 3 == 0 || num % 5 == 0 || num % 11 == 0 || num % 13 == 0 || num % 17 == 0 || num % 19 == 0)
-      {
-        bool = false;
-      }
+      bool = false;
+      return bool;
     }
-    
-    return bool;
   }
-  isPrime(7);
+  return bool;
 }
+
 isPrime(25)
