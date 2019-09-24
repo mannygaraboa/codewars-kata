@@ -1,39 +1,17 @@
 function partsSums(ls) {
-  let wholeLength = ls.length;
-  let sumArray = [];
-  while(wholeLength >= 0)
+  let sumArr = [];
+  let wholeLength = ls.length + 1;
+  for(let i = 0; i < wholeLength; i++)
   {
-    let sum = 0;
-    for(let i = 0; i < ls.length; i++)
-    {
-      sum += ls[i];
-      console.log(sum);
-    }
-    sumArray.push(sum);
-    wholeLength--;
+    let sum = ls.reduce(function(a,b){
+      return a + b;
+    }, 0);
+    sumArr.push(sum);
     ls.shift();
   }
-  return sumArray;
+  return sumArr;
 }
-partsSums([1,3,5,6,2])
-
-// Attempting new approach:
-function partsSums(ls)
-{
-  let sumArray = [];
-  for(let i = 0; i < ls.length; i++)
-  {
-    let sum = ls[i];
-    for(let j = i + 1; j < ls.length; j++)
-    {
-      sum += ls[j];
-    }
-    sumArray.push(sum);
-  }
-  sumArray.push(0);
-  return sumArray;
-}
-partsSums([744125, 935, 407, 454, 430, 90, 144, 6710213, 889, 810, 2579358])
+partsSums([0, 1, 3, 6, 10])
 
 // Other Methods:
   // ls.shift();
