@@ -13,6 +13,28 @@ function partsSums(ls) {
 }
 partsSums([0, 1, 3, 6, 10])
 
+// New Method Attempt:
+function partsSums(ls) {
+  if(ls.length == 0)
+  {
+    return [0];
+  }
+  else
+  {
+    for(let i = 0; i < ls.length; i++)
+    {
+      let sum = 0;
+      for(let j = i; j < ls.length; j++)
+      {
+        sum += ls[j];
+      }
+      ls[i] = sum;
+    }
+    ls.push(0);
+    return ls;
+  }
+}
+
 // Other Methods:
   // ls.shift();
 
