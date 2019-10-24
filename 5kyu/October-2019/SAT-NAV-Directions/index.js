@@ -34,7 +34,20 @@ function satNav(directions) {
     // Going Straight
     else if(directions[i][0] == "G")
     {
+      let direcLength = directions[i].length;
+      if(directions[i][direcLength - 2] == "k")
+      {
+        console.log(directions[i][direcLength - 2])
+      }
       
+      if(nsew == "N" || nsew == "E")
+      {
+
+      }
+      else if(nsew == "S" || nsew == "W")
+      {
+
+      }
     }
 
     // Making a Turn
