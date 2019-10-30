@@ -35,9 +35,22 @@ function satNav(directions) {
     else if(directions[i][0] == "G")
     {
       let direcLength = directions[i].length;
+
+      // Moving in km
       if(directions[i][direcLength - 2] == "k")
       {
-        console.log(directions[i][direcLength - 2])
+        let kmString = "";
+        kmString = kmString.concat(directions[i][direcLength - 5], directions[i][direcLength - 4], directions[i][direcLength - 3]);
+        let km = parseFloat(kmString);
+        console.log(km);
+      }
+      // Moving in m
+      else
+      {
+        let mString = "";
+        mString = mString.concat(directions[i][direcLength - 4], directions[i][direcLength - 3], directions[i][direcLength - 2]);
+        let m = parseInt(mString, 10);
+        console.log(m);
       }
       
       if(nsew == "N" || nsew == "E")
