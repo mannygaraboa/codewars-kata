@@ -29,37 +29,63 @@ function satNav(directions) {
       {
         nsew = "W";
       }
+      console.log("Starting Direction: " + nsew);
     }
-
+    
     // Going Straight
     else if(directions[i][0] == "G")
     {
       let direcLength = directions[i].length;
 
-      // Moving in km
+      // Moving in kilometers
       if(directions[i][direcLength - 2] == "k")
       {
         let kmString = "";
         kmString = kmString.concat(directions[i][direcLength - 5], directions[i][direcLength - 4], directions[i][direcLength - 3]);
         let km = parseFloat(kmString);
         console.log(km);
+
+        if(nsew == "N")
+        {
+
+        }
+        else if(nsew == "S")
+        {
+
+        }
+        else if(nsew == "E")
+        {
+
+        }
+        else if(nsew == "W")
+        {
+
+        }
       }
-      // Moving in m
+      // Moving in meters
       else
       {
         let mString = "";
         mString = mString.concat(directions[i][direcLength - 4], directions[i][direcLength - 3], directions[i][direcLength - 2]);
         let m = parseInt(mString, 10);
         console.log(m);
-      }
-      
-      if(nsew == "N" || nsew == "E")
-      {
 
-      }
-      else if(nsew == "S" || nsew == "W")
-      {
+        if(nsew == "N")
+        {
 
+        }
+        else if(nsew == "S")
+        {
+
+        }
+        else if(nsew == "E")
+        {
+
+        }
+        else if(nsew == "W")
+        {
+
+        }
       }
     }
 
@@ -72,12 +98,32 @@ function satNav(directions) {
     // Making a U-Turn
     else if(directions[i][1] == "u")
     {
+      if(nsew == "N")
+      {
+        nsew = "S";
+      }
+      else if(nsew == "S")
+      {
+        nsew = "N";
+      }
+      else if(nsew == "E")
+      {
+        nsew = "W";
+      }
+      else if(nsew == "W")
+      {
+        nsew = "E";
+      }
+    }
 
+    // Arrived at Destination
+    else if(directions[i][0] == "Y")
+    {
+      console.log("Final Facing Direction: " + nsew);
+      console.log("Reached Destination!");
+      return coordinates;
     }
   }
-  console.log(nsew);
-
-  return coordinates;
 }
 satNav(["Head WEST", 
         "Take the 2nd Left", 
