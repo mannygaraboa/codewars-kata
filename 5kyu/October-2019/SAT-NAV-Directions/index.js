@@ -41,36 +41,8 @@ function satNav(directions) {
       if(directions[i][direcLength - 2] == "k")
       {
         let kmString = "";
-        kmString = kmString.concat(directions[i][direcLength - 5], ".", directions[i][direcLength - 3]);
-        let distance = Math.round(parseFloat(kmString));
-        let distanceString = distance.toString();
-        distanceString = distanceString.concat(0);
-        let finalDistance = parseInt(distanceString);
-
-        if(nsew == "N")
-        {
-          y += finalDistance;
-        }
-        else if(nsew == "S")
-        {
-          y -= finalDistance;
-        }
-        else if(nsew == "E")
-        {
-          x += finalDistance;
-        }
-        else if(nsew == "W")
-        {
-          x -= finalDistance;
-        }
-      }
-      // Moving in meters
-      else
-      {
-        let mString = "";
-        mString = mString.concat(directions[i][direcLength - 4]);
-        let distance = parseInt(mString, 10);
-        console.log(distance);
+        kmString = kmString.concat(directions[i][direcLength - 5], directions[i][direcLength - 3]);
+        let distance = (parseFloat(kmString));
 
         if(nsew == "N")
         {
@@ -89,259 +61,395 @@ function satNav(directions) {
           x -= distance;
         }
       }
-      console.log("Current Coordinates: " + [x,y]);
+      // Moving in meters
+      else
+      {
+        let mString = "";
+        mString = mString.concat(directions[i][direcLength - 4]);
+        let distance = parseInt(mString, 10);
+
+        if(nsew == "N")
+        {
+          y += distance;
+        }
+        else if(nsew == "S")
+        {
+          y -= distance;
+        }
+        else if(nsew == "E")
+        {
+          x += distance;
+        }
+        else if(nsew == "W")
+        {
+          x -= distance;
+        }
+      }
+      console.log("--- Coordinates: " + [x,y] + " ---");
     }
 
     // Making a Turn
     else if(directions[i][1] == "a")
     {
       console.log(directions[i]);
+
+      // NEXT Turn
       if(directions[i][9] == "N")
       {
-        if(directions[i][14] == "L")
+        let xCord = x;
+        let yCord = y;
+        
+        if(nsew == "N")
         {
-          if(nsew == "N")
+          while(y % 10 != 0 || y == yCord)
           {
-            y += 10;
+            y++;
+          }
+          if(directions[i][14] == "L")
+          {
             nsew = "W";
           }
-          else if(nsew == "S")
+          else if(directions[i][14] == "R")
           {
-            y -= 10;
             nsew = "E";
           }
-          else if(nsew == "E")
+        }
+        else if(nsew == "S")
+        {
+          while(y % 10 != 0 || y == yCord)
           {
-            x += 10;
+            y--;
+          }
+          if(directions[i][14] == "L")
+          {
+            nsew = "E";
+          }
+          else if(directions[i][14] == "R")
+          {
+            nsew = "W";
+          }
+        }
+        else if(nsew == "E")
+        {
+          while(x % 10 != 0 || x == xCord)
+          {
+            x++;
+          }
+          if(directions[i][14] == "L")
+          {
             nsew = "N";
           }
-          else if(nsew == "W")
+          else if(directions[i][14] == "R")
           {
-            x -= 10;
             nsew = "S";
           }
         }
-        else if(directions[i][14] == "R")
+        else if(nsew == "W")
         {
-          if(nsew == "N")
+          while(x % 10 != 0 || x == xCord)
           {
-            y += 10;
-            nsew = "E";
+            x--;
           }
-          else if(nsew == "S")
+          if(directions[i][14] == "L")
           {
-            y -= 10;
-            nsew = "W";
-          }
-          else if(nsew == "E")
-          {
-            x += 10;
             nsew = "S";
           }
-          else if(nsew == "W")
+          else if(directions[i][14] == "R")
           {
-            x -= 10;
             nsew = "N";
           }
         }
       }
+      // 2nd Turn
       else if(directions[i][9] == "2")
       {
-        if(directions[i][13] == "L")
+        if(nsew == "N")
         {
-          if(nsew == "N")
+          y += 10;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            y += 20;
+            y++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "W";
           }
-          else if(nsew == "S")
+          else if(directions[i][13] == "R")
           {
-            y -= 20;
             nsew = "E";
           }
-          else if(nsew == "E")
+        }
+        else if(nsew == "S")
+        {
+          y -= 10;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            x += 20;
+            y--;
+          }
+          if(directions[i][13] == "L")
+          {
+            nsew = "E";
+          }
+          else if(directions[i][13] == "R")
+          {
+            nsew = "W";
+          }
+        }
+        else if(nsew == "E")
+        {
+          x += 10;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
+          {
+            x++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "N";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 20;
             nsew = "S";
           }
         }
-        else if(directions[i][13] == "R")
+        else if(nsew == "W")
         {
-          if(nsew == "N")
+          x -= 10;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
           {
-            y += 20;
-            nsew = "E";
+            x--;
           }
-          else if(nsew == "S")
+          if(directions[i][13] == "L")
           {
-            y -= 20;
-            nsew = "W";
-          }
-          else if(nsew == "E")
-          {
-            x += 20;
             nsew = "S";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 20;
             nsew = "N";
           }
         }
       }
+      // 3rd Turn
       else if(directions[i][9] == "3")
       {
-        if(directions[i][13] == "L")
+        if(nsew == "N")
         {
-          if(nsew == "N")
+          y += 20;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            y += 30;
+            y++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "W";
           }
-          else if(nsew == "S")
+          else if(directions[i][13] == "R")
           {
-            y -= 30;
             nsew = "E";
           }
-          else if(nsew == "E")
+        }
+        else if(nsew == "S")
+        {
+          y -= 20;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            x += 30;
+            y--;
+          }
+          if(directions[i][13] == "L")
+          {
+            nsew = "E";
+          }
+          else if(directions[i][13] == "R")
+          {
+            nsew = "W";
+          }
+        }
+        else if(nsew == "E")
+        {
+          x += 20;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
+          {
+            x++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "N";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 30;
             nsew = "S";
           }
         }
-        else if(directions[i][13] == "R")
+        else if(nsew == "W")
         {
-          if(nsew == "N")
+          x -= 20;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
           {
-            y += 30;
-            nsew = "E";
+            x--;
           }
-          else if(nsew == "S")
+          if(directions[i][13] == "L")
           {
-            y -= 30;
-            nsew = "W";
-          }
-          else if(nsew == "E")
-          {
-            x += 30;
             nsew = "S";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 30;
             nsew = "N";
           }
         }
       }
+      // 4th Turn
       else if(directions[i][9] == "4")
       {
-        if(directions[i][13] == "L")
+        if(nsew == "N")
         {
-          if(nsew == "N")
+          y += 30;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            y += 40;
+            y++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "W";
           }
-          else if(nsew == "S")
+          else if(directions[i][13] == "R")
           {
-            y -= 40;
             nsew = "E";
           }
-          else if(nsew == "E")
+        }
+        else if(nsew == "S")
+        {
+          y -= 30;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            x += 40;
+            y--;
+          }
+          if(directions[i][13] == "L")
+          {
+            nsew = "E";
+          }
+          else if(directions[i][13] == "R")
+          {
+            nsew = "W";
+          }
+        }
+        else if(nsew == "E")
+        {
+          x += 30;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
+          {
+            x++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "N";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 40;
             nsew = "S";
           }
         }
-        else if(directions[i][13] == "R")
+        else if(nsew == "W")
         {
-          if(nsew == "N")
+          x -= 30;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
           {
-            y += 40;
-            nsew = "E";
+            x--;
           }
-          else if(nsew == "S")
+          if(directions[i][13] == "L")
           {
-            y -= 40;
-            nsew = "W";
-          }
-          else if(nsew == "E")
-          {
-            x += 40;
             nsew = "S";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 40;
             nsew = "N";
           }
         }
       }
+      // 5th Turn
       else if(directions[i][9] == "5")
       {
-        if(directions[i][13] == "L")
+        if(nsew == "N")
         {
-          if(nsew == "N")
+          y += 40;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            y += 50;
+            y++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "W";
           }
-          else if(nsew == "S")
+          else if(directions[i][13] == "R")
           {
-            y -= 50;
             nsew = "E";
           }
-          else if(nsew == "E")
+        }
+        else if(nsew == "S")
+        {
+          y -= 40;
+          let yCord = y;
+          while(y % 10 != 0 || y == yCord)
           {
-            x += 50;
+            y--;
+          }
+          if(directions[i][13] == "L")
+          {
+            nsew = "E";
+          }
+          else if(directions[i][13] == "R")
+          {
+            nsew = "W";
+          }
+        }
+        else if(nsew == "E")
+        {
+          x += 40;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
+          {
+            x++;
+          }
+          if(directions[i][13] == "L")
+          {
             nsew = "N";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 50;
             nsew = "S";
           }
         }
-        else if(directions[i][13] == "R")
+        else if(nsew == "W")
         {
-          if(nsew == "N")
+          x -= 40;
+          let xCord = x;
+          while(x % 10 != 0 || x == xCord)
           {
-            y += 50;
-            nsew = "E";
+            x--;
           }
-          else if(nsew == "S")
+          if(directions[i][13] == "L")
           {
-            y -= 50;
-            nsew = "W";
-          }
-          else if(nsew == "E")
-          {
-            x += 50;
             nsew = "S";
           }
-          else if(nsew == "W")
+          else if(directions[i][13] == "R")
           {
-            x -= 50;
             nsew = "N";
           }
         }
       }
-      console.log("Current Coordinates: " + [x,y]);
+      console.log("--- Coordinates: " + [x,y] + " ---");
+      console.log("--- Facing Direction: " + nsew + " ---");
     }
 
     // Making a U-Turn
@@ -364,7 +472,7 @@ function satNav(directions) {
       {
         nsew = "E";
       }
-      console.log("Direction: " + nsew);
+      console.log("--- Facing Direction: " + nsew + " ---");
     }
 
     // Arrived at Destination
@@ -383,3 +491,96 @@ satNav(["Head WEST",
         "Go straight on for 1.5km", 
         "Turn around!",
         "You have reached your destination!"]);
+/* satNav(["Head EAST",  
+        "Take the 2nd LEFT",
+        "Take the NEXT LEFT",
+        "Take the NEXT LEFT",
+        "Go straight on for 1.5km",
+        "Take the NEXT RIGHT",
+        "Take the 2nd RIGHT",
+        "Go straight on for 1.7km",
+        "Turn around!",
+        "Take the NEXT LEFT",
+        "Go straight on for 1.0km",
+        "You have reached your destination!"]);
+*/
+
+/*
+  Other Solution:
+
+  function satNav(directions) {
+    //using units of 100m
+    let x = 0;
+    let y = 0;
+    let heading = directions[0].match(/NORTH|SOUTH|EAST|WEST/)[0];
+    
+    function turnAround() {
+      switch (heading) {
+        case 'NORTH': heading = 'SOUTH'; break;
+        case 'SOUTH': heading = 'NORTH'; break;
+        case 'WEST': heading = 'EAST'; break;
+        case 'EAST': heading = 'WEST'; break;
+      }
+    }
+    
+    function turn(dist, dir) {
+      switch (heading) {
+        case 'NORTH': 
+          y = Math.floor((y + dist)/10) * 10;
+          if (dir == 'RIGHT') heading = 'EAST'
+            else heading = 'WEST';
+          break;
+        case 'SOUTH': 
+          y = Math.ceil((y - dist)/10) * 10;
+          if (dir == 'RIGHT') heading = 'WEST'
+            else heading = 'EAST';
+          break;
+        case 'WEST': 
+          x = Math.ceil((x - dist)/10) * 10;  
+          if (dir == 'RIGHT') heading = 'NORTH'
+            else heading = 'SOUTH';
+          break;
+        case 'EAST': 
+          x = Math.floor((x + dist)/10) * 10;  
+          if (dir == 'RIGHT') heading = 'SOUTH'
+            else heading = 'NORTH';
+          break;
+      }
+    }
+    
+    function goStraight(dist) {
+      switch (heading) {
+        case 'NORTH': y += dist; break;
+        case 'SOUTH': y -= dist; break;
+        case 'WEST': x -= dist; break;
+        case 'EAST': x += dist; break;
+      }
+    }
+    
+    
+    for (let i = 1; i < directions.length - 1; i++) {
+      //determine the type of instruction (there are three types, first word differs)
+      switch (directions[i].split(' ')[0]) {
+        case 'Turn': 
+          turnAround();
+          break;
+        case 'Take':
+          let dist = directions[i].match(/NEXT|\d/)[0];
+          if (dist == 'NEXT') dist = 1;
+          let dir = directions[i].match(/LEFT|RIGHT/)[0];
+          turn(dist * 10, dir);
+          break;
+        case 'Go': 
+          let strDist = directions[i].match(/\d+\.\d*(?=km)/);
+          if (strDist !== null) strDist = Number(strDist[0]) * 10
+          else {
+            strDist = directions[i].match(/\d+(?=m)/);
+            if (strDist !== null) strDist = Number(strDist[0]) / 100;
+          }
+          goStraight(strDist);
+          break;
+        }
+    }
+    return [x, y];
+  }
+*/
