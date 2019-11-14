@@ -9,18 +9,34 @@ function nextBigger(n){
 
   let nArrayCopy = nArray.slice();
   nArrayCopy.sort(function(a, b){return b - a});
-  let copyJoined = nArrayCopy.join("");
+  let copyJoined = parseInt(nArrayCopy.join(""));
   
-  if(nArray.length == 1 || n == copyJoined)
+  console.log(nArray);
+  console.log("Sorted Array: " + nArrayCopy);
+
+  if(nArray.length == 1 || n === copyJoined)
   {
     return -1;
   }
   else
   {
-    return 0;
+    for(let i = nArray.length - 2; i >= 0; i--)
+    {
+      if(nArray[i] < nArray[i+1])
+      {
+        if(i === 0)
+        {
+          
+        }
+        [nArray[i], nArray[i+1]] = [nArray[i+1], nArray[i]];
+        let newNum = parseInt(nArray.join(""));
+        return newNum;
+      }
+    }
+    console.log(nArray);
   }
 }
-nextBigger(123);
+nextBigger(1542);
 
 // 2710 ==> 7012
 //  153 ==>  315
