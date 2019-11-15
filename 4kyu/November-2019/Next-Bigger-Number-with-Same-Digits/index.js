@@ -26,17 +26,34 @@ function nextBigger(n){
       {
         if(i === 0)
         {
-          
+          let firstNum = parseInt(nArray.splice(i, 1));
+          nArray.sort();
+          nArray.splice(1, 0, firstNum);
+          let newNum = parseInt(nArray.join(""));
+          return newNum;
         }
-        [nArray[i], nArray[i+1]] = [nArray[i+1], nArray[i]];
-        let newNum = parseInt(nArray.join(""));
-        return newNum;
+        else
+        {
+          let spliced = nArray.splice(i);
+          let removedNum = parseInt(spliced.splice(1, 1));
+          spliced.sort();
+          spliced.unshift(removedNum);
+          let finalArray = nArray.concat(spliced);
+          let finalNum = parseInt(finalArray.join(""));
+          return finalNum;
+        }
       }
     }
-    console.log(nArray);
   }
 }
 nextBigger(1542);
 
 // 2710 ==> 7012
-//  153 ==>  315
+// 153 ==> 315
+// 1542 ==> 2145
+// 153931 ==> 159133
+// 198761 ==> 611789
+// 298761 ==> 612789
+// 191111 ==> 911111
+// 59876 ==> 65789
+// 59786 ==> 59867
