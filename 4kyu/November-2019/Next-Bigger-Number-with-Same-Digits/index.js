@@ -26,11 +26,35 @@ function nextBigger(n){
       {
         if(i === 0)
         {
-          let firstNum = parseInt(nArray.splice(i, 1));
-          nArray.sort();
-          nArray.splice(1, 0, firstNum);
-          let newNum = parseInt(nArray.join(""));
-          return newNum;
+          if(nArray[0] === nArray[nArray.length - 1])
+          {
+            for(let i = nArray.length - 1; i >= 0; i--)
+            {
+              if(nArray[i] < nArray[i - 1])
+              {
+                let spliced = nArray.splice(i - 1);
+                let finalArray = spliced.concat(nArray);
+                let finalNum = parseInt(finalArray.join(""));
+                return finalNum;
+              }
+            }
+          }
+          else if(nArray[0] > nArray[nArray.length - 1])
+          {
+            let spliced = nArray.splice(nArray.length - 2);
+            nArray.sort();
+            let finalArray = spliced.concat(nArray);
+            let finalNum = parseInt(finalArray.join(""));
+            return finalNum;
+          }
+          else if(nArray[0] < nArray[nArray.length - 1])
+          {
+            let splicedNum = parseInt(nArray.splice(nArray.length - 1));
+            nArray.sort();
+            nArray.unshift(splicedNum);
+            let finalNum = parseInt(nArray.join(""));
+            return finalNum;
+          }
         }
         else
         {
@@ -46,14 +70,18 @@ function nextBigger(n){
     }
   }
 }
-nextBigger(1542);
+nextBigger(153931);
 
 // 2710 ==> 7012
 // 153 ==> 315
+// 1541 ==> 4115
 // 1542 ==> 2145
 // 153931 ==> 159133
 // 198761 ==> 611789
 // 298761 ==> 612789
+// 298763 ==> 326789
+// 78321 ==> 81237
 // 191111 ==> 911111
+// 191112 ==> 191121
 // 59876 ==> 65789
 // 59786 ==> 59867
