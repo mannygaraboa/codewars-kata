@@ -17,7 +17,14 @@ IterativeRotationCipher.encode = function(n,str){
   }
 
   // (2.) Shift order of characters of new string to the right by "n" characters
-
+  let shiftString = "";
+  for(let i = str.length - n; i < str.length; i++)
+  {
+    shiftString = shiftString.concat(str.charAt(i));
+  }
+  str = str.replace(shiftString, "");
+  let newShiftString = shiftString.concat(str);
+  console.log(newShiftString);
 
   // (3.) Put spaces back in original positions
 
