@@ -24,13 +24,22 @@ IterativeRotationCipher.encode = function(n,str){
   }
   str = str.replace(shiftString, "");
   let newShiftString = shiftString.concat(str);
-  console.log(newShiftString);
+  // console.log(newShiftString);
 
   // (3.) Put spaces back in original positions
-
+  let charArray = [];
+  for(let i = 0; i < newShiftString.length; i++)
+  {
+    charArray.push(newShiftString.charAt(i));
+  }
+  for(let i = 0; i < spaceArray.length; i++)
+  {
+    charArray.splice(spaceArray[i], 0, " ");
+  }
+  // console.log(charArray);
 
   // (4.) Shift characters of each substring (separated by 1 or more consecutive spaces) to the right
-
+  
 
 };
 
