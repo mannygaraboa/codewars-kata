@@ -1,4 +1,5 @@
 const IterativeRotationCipher = {};
+let quote = `If you wish to make an apple pie from scratch, you must first invent the universe.`;
 
 /*--------------------------------------------------------------------------------------*/
 /*----------------------------------------ENCODE----------------------------------------*/
@@ -39,7 +40,10 @@ IterativeRotationCipher.encode = function(n,str){
   // console.log(charArray);
 
   // (4.) Shift characters of each substring (separated by 1 or more consecutive spaces) to the right
-  
+  for(let i = 0; i < charArray.length; i++)
+  {
+
+  }
 
 };
 
