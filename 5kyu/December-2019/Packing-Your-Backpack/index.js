@@ -2,9 +2,12 @@ function packBagpack(scores, weights, capacity) {
   let scoreArray = [];
   for(let i = 0; i < weights.length; i++)
   {
-    if(weights[i] <= capacity)
+    for(let j = 0; j < weights.length; j++)
     {
-      scoreArray.push(scores[i]);
+      if(weights[i] <= capacity)
+      {
+        scoreArray.push(scores[i]);
+      }
     }
   }
   return scoreArray;
