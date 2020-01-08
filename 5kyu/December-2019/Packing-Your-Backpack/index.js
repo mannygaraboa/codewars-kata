@@ -1,15 +1,25 @@
 function packBagpack(scores, weights, capacity) {
+  let largestSum = 0;
   let scoreArray = [];
+  // Individual item checking
   for(let i = 0; i < weights.length; i++)
   {
-    for(let j = 0; j < weights.length; j++)
+    if(weights[i] <= capacity && scores[i] > largestSum)
     {
-      if(weights[i] <= capacity)
-      {
-        scoreArray.push(scores[i]);
-      }
+      largestSum = scores[i];
+      scoreArray.push(scores[i]);
     }
   }
+
+  for(let i = 0; i < weights.length; i++)
+  {
+    for(let j = weights.length - 1; j > 0; j--)
+    {
+      const arrSum = arr => arr.reduce((a,b) => a + b, 0);
+    }
+  }
+
+  console.log(largestSum);
   return scoreArray;
 }
 packBagpack([15, 10, 9, 5], [1, 5, 3, 4], 3)
