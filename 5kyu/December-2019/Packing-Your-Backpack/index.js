@@ -14,16 +14,20 @@ function packBagpack(scores, weights, capacity) {
     }
   }
   
+  // 2 numbers combined weights checking
   for(let i = 0; i < weights.length; i++)
   {
-    let weightSum = weights[i];
     for(let j = i+1; j < weights.length; j++)
     {
-      weightSum += weights[j];
-      console.log(weightSum);
-      weightArray.push(weightSum);
+      let combo = weights[i] + weights[j];
+      if(combo <= capacity)
+      {
+        weightArray.push(combo);
+      }
+      console.log("Combo: " + combo);
     }
   }
+  
   console.log(weightArray);
   return scoreArray;
 }
@@ -40,3 +44,18 @@ packBagpack([15, 10, 9, 5], [1, 5, 3, 4], 3)
 // capacity = 15
 
 // Solution is 
+
+/*
+  Other Methods:
+
+  for(let i = 0; i < weights.length; i++)
+  {
+    let weightSum = weights[i];
+    for(let j = i+1; j < weights.length; j++)
+    {
+      weightSum += weights[j];
+      console.log(weightSum);
+      weightArray.push(weightSum);
+    }
+  }
+*/
