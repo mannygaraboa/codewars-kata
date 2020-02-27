@@ -26,8 +26,13 @@ function packBagpack(scores, weights, capacity) {
       }
       console.log("Combo: " + combo);
     }
+
+    if(j = weights.length)
+    {
+      
+    }
   }
-  
+
   console.log(weightArray);
   return scoreArray;
 }
