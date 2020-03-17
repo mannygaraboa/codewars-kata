@@ -1,5 +1,4 @@
 function packBagpack(scores, weights, capacity) {
-  let largestSum = 0;
   let weightArray = [];
   let scoreArray = [];
 
@@ -8,35 +7,103 @@ function packBagpack(scores, weights, capacity) {
   {
     if(weights[i] <= capacity)
     {
-      largestSum = scores[i];
       weightArray.push(weights[i]);
       scoreArray.push(scores[i]);
     }
   }
   
-  // 2 numbers combined weights checking
-  for(let i = 0; i < weights.length; i++)
-  {
-    for(let j = i+1; j < weights.length; j++)
-    {
-      let combo = weights[i] + weights[j];
-      if(combo <= capacity)
+  // Combo Creator
+  function combos(numbers) {
+    let result = [];
+    let f = function(prefix, numbers) {
+      for(let i = 0; i < numbers.length; i++)
       {
-        weightArray.push(combo);
+        console.log()
+        result.push(prefix + numbers[i]);
+        f(prefix + numbers[i], numbers.slice(i + 1));
       }
-      console.log("Combo: " + combo);
     }
-
-    if(j = weights.length)
-    {
-      
-    }
+    f(0, numbers);
+    return result;
   }
-
+  let combinations = combos(weights);
+  console.log(combinations);
+  
   console.log(weightArray);
-  return scoreArray;
+  console.log(scoreArray.sort(function (a, b) {return b - a}));
+  return "Highest BackPack: " + scoreArray[0];
 }
 packBagpack([15, 10, 9, 5], [1, 5, 3, 4], 3)
+
+
+/*
+Previous Methods:
+
+  function packBagpack(scores, weights, capacity) {
+    let largestSum = 0;
+    let weightArray = [];
+    let scoreArray = [];
+
+    // Individual item checking
+    for(let i = 0; i < weights.length; i++)
+    {
+      if(weights[i] <= capacity)
+      {
+        largestSum = scores[i];
+        weightArray.push(weights[i]);
+        scoreArray.push(scores[i]);
+      }
+    }
+    
+    // 2 numbers combined weights checking
+    for(let i = 0; i < weights.length; i++)
+    {
+      for(let j = i+1; j < weights.length; j++)
+      {
+        let combo = weights[i] + weights[j];
+        if(combo <= capacity)
+        {
+          weightArray.push(combo);
+        }
+        console.log("Combo: " + combo);
+      }
+    }
+
+      // 2 numbers combined weights checking
+      for(let i = 0; i < weights.length; i++)
+      {
+        for(let j = i+1; j < weights.length; j++)
+        {
+          let combo = weights[i] + weights[j];
+          if(combo <= capacity)
+          {
+            weightArray.push(combo);
+          }
+          console.log("Combo: " + combo);
+        }
+
+        if(j = weights.length)
+        {
+          
+        }
+      }
+
+    // Multiple combination cheecking
+    for(let i = 0; i < weights.length; i++)
+    {
+      let weightSum = weights[i];
+      for(let j = i+1; j < weights.length; j++)
+      {
+        weightSum += weights[j];
+        console.log(weightSum);
+        weightArray.push(weightSum);
+      }
+    }
+    
+    console.log(weightArray);
+    return scoreArray;
+  }
+*/
 
 // scores = [15, 10, 9, 5]
 // weights = [1, 5, 3, 4]
