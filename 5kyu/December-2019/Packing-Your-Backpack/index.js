@@ -15,20 +15,35 @@ function packBagpack(scores, weights, capacity) {
   // Combo Creator
   function combos(numbers) {
     let result = [];
+    let comboArray = [];
     let f = function(prefix, numbers) {
       for(let i = 0; i < numbers.length; i++)
       {
-        console.log()
-        result.push(prefix + numbers[i]);
+        // console.log(prefix + ": " + numbers[i]);
+        // if(prefix + numbers[i] <= capacity)
+        // {
+        //   result.push(prefix + numbers[i]);
+        //   comboArray.push();
+        // }
+        if((prefix + numbers[i]) === String)
+        {
+          comboArray.push(prefix + numbers[i]);
+        }
+        else
+        {
+          result.push(prefix + numbers[i]);
+        }
         f(prefix + numbers[i], numbers.slice(i + 1));
       }
     }
     f(0, numbers);
-    return result;
+    f('', numbers);
+    console.log(result);
+    console.log(comboArray);
   }
   let combinations = combos(weights);
   console.log(combinations);
-  
+
   console.log(weightArray);
   console.log(scoreArray.sort(function (a, b) {return b - a}));
   return "Highest BackPack: " + scoreArray[0];
