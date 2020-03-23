@@ -17,23 +17,21 @@ function packBagpack(scores, weights, capacity) {
     let result = [];
     let comboArray = [];
     let f = function(prefix, numbers) {
-      for(let i = 0; i < numbers.length; i++)
+      if(prefix = '')
       {
-        // console.log(prefix + ": " + numbers[i]);
-        // if(prefix + numbers[i] <= capacity)
-        // {
-        //   result.push(prefix + numbers[i]);
-        //   comboArray.push();
-        // }
-        if((prefix + numbers[i]) === String)
+        for(let i = 0; i < numbers.length; i++)
         {
           comboArray.push(prefix + numbers[i]);
+          f(prefix + numbers[i], numbers.slice(i + 1));
         }
-        else
+      }
+      else if(prefix == 0)
+      {
+        for(let i = 0; i < numbers.length; i++)
         {
           result.push(prefix + numbers[i]);
+          f(prefix + numbers[i], numbers.slice(i + 1));
         }
-        f(prefix + numbers[i], numbers.slice(i + 1));
       }
     }
     f(0, numbers);
